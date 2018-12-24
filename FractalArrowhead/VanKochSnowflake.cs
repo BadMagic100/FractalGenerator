@@ -22,13 +22,13 @@ namespace FractalArrowhead
             //rotate about its left endpoint clockwise 60 degrees
             left = graphics.RotateAbout(left, left.X1, left.Y1, -60);
             //make it face outwards
-            left = graphics.Flip(left);
+            left = graphics.SwapEndpoints(left);
             //make an equal length copy of the right segment
             Line right = graphics.Copy(top);
             //rotate about its right endpoint counterclockwise 60 degrees
             right = graphics.RotateAbout(right, right.X2, right.Y2, 60);
             //make it face outwards
-            right = graphics.Flip(right);
+            right = graphics.SwapEndpoints(right);
         }
 
         protected override void IterateOn(Line l)

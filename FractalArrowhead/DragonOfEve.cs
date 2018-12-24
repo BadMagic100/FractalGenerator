@@ -34,7 +34,7 @@ namespace FractalArrowhead
             //connect the left and right segments
             graphics.DrawLine(left.X2, left.Y2, right.X1, right.Y1);
             //flip the direction of the right segment so it faces down
-            graphics.Flip(right);
+            graphics.SwapEndpoints(right);
         }
     }
 }

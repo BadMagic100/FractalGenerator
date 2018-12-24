@@ -23,7 +23,6 @@ namespace FractalArrowhead
         protected override void Init()
         {
             Line l = graphics.DrawLine(-300, 0, 300, 0);
-            l.Resources["type"] = 'a';
         }
 
         protected override void IterateOn(Line l)
@@ -36,18 +35,18 @@ namespace FractalArrowhead
             Line l2 = graphics.Copy(l1);
             Line r1 = segments[1];
             Line r2 = graphics.Copy(r1);
-            //if the line is type a, rotate the left up and right down
-            int sign = (char)l.Resources["type"] == 'a' ? 1 : -1;
+            //if the line is up, rotate the left up and right down
+            //and vice-versa if the line is down
+            int sign = graphics.GetDirection(l);
             l1 = graphics.RotateAbout(l1, l1.X1, l1.Y1, sign * 60);
             l2 = graphics.RotateAbout(l2, l2.X2, l2.Y2, -sign * 60);
             r1 = graphics.RotateAbout(r1, r1.X1, r1.Y1, -sign * 60);
             r2 = graphics.RotateAbout(r2, r2.X2, r2.Y2, sign * 60);
-            //invert all the new lines' types
-            char type = (char)l.Resources["type"] == 'a' ? 'b' : 'a';
-            l1.Resources["type"] = type;
-            l2.Resources["type"] = type;
-            r1.Resources["type"] = type;
-            r2.Resources["type"] = type;
+            //invert all the new lines' direction
+            graphics.FlipDirection(l1);
+            graphics.FlipDirection(l2);
+            graphics.FlipDirection(r1);
+            graphics.FlipDirection(r2);
         }
     }
 }

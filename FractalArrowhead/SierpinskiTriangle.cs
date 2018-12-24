@@ -36,10 +36,10 @@ namespace FractalArrowhead
             Line center = graphics.Copy(left);
             center = graphics.RotateAbout(center, center.X2, center.Y2, 120);
             //finally, flip the left and right segments to make them face inward...
-            graphics.Flip(left);
-            graphics.Flip(right);
+            graphics.SwapEndpoints(left);
+            graphics.SwapEndpoints(right);
             //... and the center segment to face outward
-            graphics.Flip(center);
+            graphics.SwapEndpoints(center);
         }
     }
 }

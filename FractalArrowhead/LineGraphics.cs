@@ -26,13 +26,16 @@ namespace FractalArrowhead
         {
             Line l = new Line() { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2, StrokeThickness = 1 };
             l.Stroke = new SolidColorBrush(Colors.Black);
+            l.Resources["dir"] = "up";
             pendingAdd.Add(l);
             return l;
         }
 
         public Line Copy(Line l)
         {
-            return DrawLine(l.X1, l.Y1, l.X2, l.Y2);
+            Line copy = DrawLine(l.X1, l.Y1, l.X2, l.Y2);
+            copy.Resources["dir"] = l.Resources["dir"];
+            return copy;
         }
 
         public void Erase(Line l)
@@ -66,7 +69,9 @@ namespace FractalArrowhead
             double nY2 = distEnd * Math.Sin(angleEnd) + y;
 
             Erase(l);
-            return DrawLine(nX1, nY1, nX2, nY2);
+            Line n = DrawLine(nX1, nY1, nX2, nY2);
+            n.Resources["dir"] = l.Resources["dir"];
+            return n;
         }
 
         public List<Line> Split(Line l, int numSegments)
@@ -92,7 +97,9 @@ namespace FractalArrowhead
             {
                 double endX = lenInterval * Math.Cos(angle) + prevX;
                 double endY = lenInterval * Math.Sin(angle) + prevY;
-                ret.Add(DrawLine(prevX, prevY, endX, endY));
+                Line segment = DrawLine(prevX, prevY, endX, endY);
+                segment.Resources["dir"] = l.Resources["dir"];
+                ret.Add(segment);
                 prevX = endX;
                 prevY = endY;
             }
@@ -100,10 +107,22 @@ namespace FractalArrowhead
             return ret;
         }
 
-        public Line Flip(Line l)
+        public Line SwapEndpoints(Line l)
         {
             Erase(l);
             return DrawLine(l.X2, l.Y2, l.X1, l.Y1);
+        }
+
+        public int GetDirection(Line l)
+        {
+            return (string)l.Resources["dir"] == "up" ? 1 : -1;
+        }
+
+        public Line FlipDirection(Line l)
+        {
+            string direction = (string)l.Resources["dir"] == "up" ? "down" : "up";
+            l.Resources["dir"] = direction;
+            return l;
         }
 
         public void Render()
