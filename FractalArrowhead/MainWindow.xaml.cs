@@ -32,6 +32,9 @@ namespace FractalArrowhead
             selector.Items.Add(new LevyC(canvas));
             selector.Items.Add(new HeighwayDragon(canvas));
             selector.Items.Add(new MandelbrotCurve(canvas));
+            selector.Items.Add(new UnnamedThing1(canvas));
+            //Gosper curve http://fractalcurves.com/all_curves/images/7E/750x240xa1.png.pagespeed.ic.CU17n7Bf-R.png
+            //snowflake sweep http://fractalcurves.com/all_curves/images/9E/a1.png
 
             selector.SelectedIndex = 0;
         }
@@ -41,6 +44,7 @@ namespace FractalArrowhead
             FractalGenerator gen = selector.SelectedItem as FractalGenerator;
             //just to be extra safe
             gen?.Iterate();
+            //want: thread this so that that each line replacement is shown serially
             numLines.Text = canvas.Children.Count.ToString();
         }
 

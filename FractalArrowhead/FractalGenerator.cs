@@ -51,7 +51,7 @@ namespace FractalArrowhead
 
         private string ToTitleCase(string str)
         {
-            return Regex.Replace(str, "[a-zA-Z][A-Z]", m => $"{m.Value[0]} {m.Value[1]}");
+            return Regex.Replace(str, @"[a-zA-Z]([A-Z]|\d)", m => $"{m.Value[0]} {m.Value[1]}");
         }
     }
 }
