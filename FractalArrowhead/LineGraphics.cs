@@ -110,12 +110,20 @@ namespace FractalArrowhead
         public Line SwapEndpoints(Line l)
         {
             Erase(l);
-            return DrawLine(l.X2, l.Y2, l.X1, l.Y1);
+            Line n = DrawLine(l.X2, l.Y2, l.X1, l.Y1);
+            n.Resources["dir"] = l.Resources["dir"];
+            return n;
         }
 
         public int GetDirection(Line l)
         {
             return (string)l.Resources["dir"] == "up" ? 1 : -1;
+        }
+
+        public Line SetDirectionFrom(Line l1, Line l2)
+        {
+            l1.Resources["dir"] = l2.Resources["dir"];
+            return l1;
         }
 
         public Line FlipDirection(Line l)

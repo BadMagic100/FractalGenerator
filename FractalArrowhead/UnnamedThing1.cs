@@ -22,7 +22,7 @@ namespace FractalArrowhead
 
         protected override void Init()
         {
-            Line l = graphics.DrawLine(-300, 0, 300, 0);
+            graphics.DrawLine(-300, 0, 300, 0);
         }
 
         protected override void IterateOn(Line l)
