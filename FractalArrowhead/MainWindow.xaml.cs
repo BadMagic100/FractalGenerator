@@ -34,7 +34,13 @@ namespace FractalArrowhead
             selector.Items.Add(new MandelbrotCurve(canvas));
             selector.Items.Add(new UnnamedThing1(canvas));
             selector.Items.Add(new SnowflakeSweep(canvas));
+            //todo
             //Gosper curve http://fractalcurves.com/all_curves/images/7E/750x240xa1.png.pagespeed.ic.CU17n7Bf-R.png
+            //terdragon http://fractalcurves.com/all_curves/images/3E/8.png
+            //peano sweep http://fractalcurves.com/all_curves/images/4G/10.png
+            //sierpinski family http://fractalcurves.com/all_curves/images/4E/11.png
+            //scroll curve http://fractalcurves.com/all_curves/images/9E/d1.png
+            //http://fractalcurves.com/all_curves/images/9E/o1.png
 
             selector.SelectedIndex = 0;
         }
