@@ -43,7 +43,8 @@ namespace FractalArrowhead
             //terdragon http://fractalcurves.com/all_curves/images/3E/8.png
             //scroll curve http://fractalcurves.com/all_curves/images/9E/d1.png
 
-            selector.SelectedIndex = 0;
+            //select the last item, easier to debug
+            selector.SelectedIndex = selector.Items.Count - 1;
         }
 
         private void Iterate_Click(object sender, RoutedEventArgs e)
