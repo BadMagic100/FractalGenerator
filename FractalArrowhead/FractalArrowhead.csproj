@@ -61,11 +61,13 @@
     <Compile Include="LevyC.cs" />
     <Compile Include="MandelbrotCurve.cs" />
     <Compile Include="MinkowskiCurve.cs" />
+    <Compile Include="PeanoSweep.cs" />
     <Compile Include="SierpinskiFamily.cs" />
     <Compile Include="SierpinskiTriangle.cs" />
     <Compile Include="FractalTree.cs" />
     <Compile Include="SnowflakeSweep.cs" />
     <Compile Include="UnnamedThing1.cs" />
+    <Compile Include="UnnamedThing2.cs" />
     <Compile Include="VanKochSnowflake.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
