@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 
 namespace FractalArrowhead
 {
+    /// <summary>
+    /// An abstract iterative fractal generator
+    /// </summary>
     public abstract class FractalGenerator
     {
         protected readonly Canvas canvas;
@@ -22,16 +25,29 @@ namespace FractalArrowhead
             graphics = new LineGraphics(canvas);
         }
 
+        /// <summary>
+        /// Performs calls to the graphics engine for initial fractal setup
+        /// </summary>
         protected abstract void Init();
 
+        /// <summary>
+        /// Sets up and renders the start of the fractal
+        /// </summary>
         public void Setup()
         {
             Init();
             graphics.Render();
         }
 
+        /// <summary>
+        /// Performs the iterative step on a single line
+        /// </summary>
+        /// <param name="l">The line to replace</param>
         protected abstract void IterateOn(Line l);
 
+        /// <summary>
+        /// Performs the next step of the fractal generation
+        /// </summary>
         public void Iterate()
         {
             foreach(UIElement u in canvas.Children)

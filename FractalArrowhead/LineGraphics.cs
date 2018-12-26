@@ -173,6 +173,7 @@ namespace FractalArrowhead
         /// <returns>The line with modified direction</returns>
         public Line SetDirectionFrom(Line l1, Line l2)
         {
+            Erase(l1);
             Line l = Copy(l1);
             l.Resources["dir"] = l2.Resources["dir"];
             return l;
@@ -185,6 +186,7 @@ namespace FractalArrowhead
         /// <returns>The altered line</returns>
         public Line FlipDirection(Line l)
         {
+            Erase(l);
             Line copy = Copy(l);
             string direction = (string)copy.Resources["dir"] == "up" ? "down" : "up";
             copy.Resources["dir"] = direction;
