@@ -9,6 +9,10 @@ using System.Windows.Shapes;
 
 namespace FractalArrowhead
 {
+    /// <summary>
+    /// A graphics engine for handling lines on a canvas.
+    /// All operations preserve the original line for use until the next graphics update.
+    /// </summary>
     public class LineGraphics
     {
         private readonly Canvas canvas;
@@ -22,6 +26,14 @@ namespace FractalArrowhead
             pendingRemove = new List<Line>();
         }
 
+        /// <summary>
+        /// Draws a line on the canvas to between the 2 specified points with an up direction
+        /// </summary>
+        /// <param name="x1">Starting point X</param>
+        /// <param name="y1">Starting point Y</param>
+        /// <param name="x2">Ending point X</param>
+        /// <param name="y2">Ending point Y</param>
+        /// <returns></returns>
         public Line DrawLine(double x1, double y1, double x2, double y2)
         {
             Line l = new Line() { X1 = x1, Y1 = y1, X2 = x2, Y2 = y2, StrokeThickness = 1 };
@@ -31,6 +43,11 @@ namespace FractalArrowhead
             return l;
         }
 
+        /// <summary>
+        /// Clones a line
+        /// </summary>
+        /// <param name="l">The line to copy</param>
+        /// <returns>The clone</returns>
         public Line Copy(Line l)
         {
             Line copy = DrawLine(l.X1, l.Y1, l.X2, l.Y2);
@@ -38,11 +55,23 @@ namespace FractalArrowhead
             return copy;
         }
 
+        /// <summary>
+        /// Erases a line
+        /// </summary>
+        /// <param name="l">The line to erase</param>
         public void Erase(Line l)
         {
             pendingRemove.Add(l);
         }
 
+        /// <summary>
+        /// Rotates a line about a point in space
+        /// </summary>
+        /// <param name="l">The line to rotate</param>
+        /// <param name="x">X to rotate around</param>
+        /// <param name="y">Y to rotate around</param>
+        /// <param name="degrees">The angle to rotate (positive is counterclockwise)</param>
+        /// <returns>The rotated line</returns>
         public Line RotateAbout(Line l, double x, double y, double degrees)
         {
             //the distance from the rotation point to the line's start point
@@ -74,6 +103,12 @@ namespace FractalArrowhead
             return n;
         }
 
+        /// <summary>
+        /// Splits a line into equal parts
+        /// </summary>
+        /// <param name="l">The line to split</param>
+        /// <param name="numSegments">The number of segments to split into</param>
+        /// <returns>The list of split lines, or null if the line segments are too short to draw</returns>
         public List<Line> Split(Line l, int numSegments)
         {
             //don't want to use yield syntax because we need to make sure all cases are completed
@@ -107,6 +142,11 @@ namespace FractalArrowhead
             return ret;
         }
 
+        /// <summary>
+        /// Swaps the endpoints of a line, reversing the orientation but maintaining the direction
+        /// </summary>
+        /// <param name="l">The line to swap</param>
+        /// <returns>The new line</returns>
         public Line SwapEndpoints(Line l)
         {
             Erase(l);
@@ -115,24 +155,45 @@ namespace FractalArrowhead
             return n;
         }
 
+        /// <summary>
+        /// Gets the direction of the line as a sign
+        /// </summary>
+        /// <param name="l">The line</param>
+        /// <returns>1 if the direction is up, -1 if the direction is down</returns>
         public int GetDirection(Line l)
         {
             return (string)l.Resources["dir"] == "up" ? 1 : -1;
         }
 
+        /// <summary>
+        /// Copies the direction from one line to another line
+        /// </summary>
+        /// <param name="l1">The line to alter the direction of</param>
+        /// <param name="l2">The source line</param>
+        /// <returns>The line with modified direction</returns>
         public Line SetDirectionFrom(Line l1, Line l2)
         {
-            l1.Resources["dir"] = l2.Resources["dir"];
-            return l1;
-        }
-
-        public Line FlipDirection(Line l)
-        {
-            string direction = (string)l.Resources["dir"] == "up" ? "down" : "up";
-            l.Resources["dir"] = direction;
+            Line l = Copy(l1);
+            l.Resources["dir"] = l2.Resources["dir"];
             return l;
         }
 
+        /// <summary>
+        /// Flips the direction of the line
+        /// </summary>
+        /// <param name="l">The line to alter the direction of</param>
+        /// <returns>The altered line</returns>
+        public Line FlipDirection(Line l)
+        {
+            Line copy = Copy(l);
+            string direction = (string)copy.Resources["dir"] == "up" ? "down" : "up";
+            copy.Resources["dir"] = direction;
+            return copy;
+        }
+
+        /// <summary>
+        /// Performs all pending operations to refresh the graphics
+        /// </summary>
         public void Render()
         {
             foreach(Line l in pendingAdd)
